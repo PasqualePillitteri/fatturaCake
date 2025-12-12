@@ -152,6 +152,21 @@ class RbacSeed extends BaseSeed
                 ['LogAttivita', 'index', 'Log Attività: Elenco'],
                 ['LogAttivita', 'view', 'Log Attività: Dettaglio'],
             ],
+            'Import/Export' => [
+                ['Import', 'index', 'Import: Pagina principale'],
+                ['Import', 'fatture', 'Import: Upload fatture Excel'],
+                ['Import', 'preview', 'Import: Anteprima dati'],
+                ['Import', 'execute', 'Import: Esegui importazione'],
+                ['Import', 'fattureXml', 'Import: Upload fatture XML'],
+                ['Import', 'previewXml', 'Import: Anteprima XML'],
+                ['Import', 'executeXml', 'Import: Esegui import XML'],
+                ['Export', 'index', 'Export: Pagina principale'],
+                ['Export', 'fatture', 'Export: Esporta fatture'],
+                ['Export', 'anagrafiche', 'Export: Esporta anagrafiche'],
+                ['Export', 'prodotti', 'Export: Esporta prodotti'],
+                ['Fatture', 'downloadXml', 'Fatture: Scarica XML'],
+                ['Fatture', 'inviaSdi', 'Fatture: Invia a SDI'],
+            ],
         ];
 
         foreach ($permissionsByGroup as $groupName => $perms) {
@@ -189,7 +204,7 @@ class RbacSeed extends BaseSeed
         // Admin (role_id=2) - Full CRUD on everything except Roles/Permissions management
         $adminControllers = ['Fatture', 'FatturaRighe', 'FatturaAllegati', 'Anagrafiche', 'Prodotti',
                             'CategorieProdotti', 'Listini', 'ListiniProdotti', 'Users', 'Tenants',
-                            'Dashboard', 'Pages', 'LogAttivita'];
+                            'Dashboard', 'Pages', 'LogAttivita', 'Import', 'Export'];
         $adminActions = ['index', 'view', 'add', 'edit', 'delete'];
 
         foreach ($adminControllers as $controller) {
@@ -209,6 +224,24 @@ class RbacSeed extends BaseSeed
         // Admin also gets profile/password
         foreach (['profile', 'changePassword', 'login', 'logout'] as $action) {
             $key = 'Users::' . $action;
+            if (isset($permissionMap[$key])) {
+                $rolesPermissions[] = [
+                    'id' => $rpId++,
+                    'role_id' => 2,
+                    'permission_id' => $permissionMap[$key],
+                    'tenant_id' => null,
+                    'created' => $now,
+                ];
+            }
+        }
+        // Admin Import/Export special actions
+        $adminImportExport = [
+            'Import::fatture', 'Import::preview', 'Import::execute',
+            'Import::fattureXml', 'Import::previewXml', 'Import::executeXml',
+            'Export::fatture', 'Export::anagrafiche', 'Export::prodotti',
+            'Fatture::downloadXml', 'Fatture::inviaSdi',
+        ];
+        foreach ($adminImportExport as $key) {
             if (isset($permissionMap[$key])) {
                 $rolesPermissions[] = [
                     'id' => $rpId++,
@@ -255,6 +288,24 @@ class RbacSeed extends BaseSeed
         // Staff profile/auth
         foreach (['profile', 'changePassword', 'login', 'logout'] as $action) {
             $key = 'Users::' . $action;
+            if (isset($permissionMap[$key])) {
+                $rolesPermissions[] = [
+                    'id' => $rpId++,
+                    'role_id' => 3,
+                    'permission_id' => $permissionMap[$key],
+                    'tenant_id' => null,
+                    'created' => $now,
+                ];
+            }
+        }
+        // Staff Import/Export (full access)
+        $staffImportExport = [
+            'Import::index', 'Import::fatture', 'Import::preview', 'Import::execute',
+            'Import::fattureXml', 'Import::previewXml', 'Import::executeXml',
+            'Export::index', 'Export::fatture', 'Export::anagrafiche', 'Export::prodotti',
+            'Fatture::downloadXml',
+        ];
+        foreach ($staffImportExport as $key) {
             if (isset($permissionMap[$key])) {
                 $rolesPermissions[] = [
                     'id' => $rpId++,
