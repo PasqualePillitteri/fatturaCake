@@ -1,0 +1,2500 @@
+/**
+ * FatturaCake Admin Theme
+ * Modern Bootstrap 5 admin template with dark mode support
+ */
+
+/* ========================================
+   CSS Variables & Color Schemes
+   ======================================== */
+
+:root {
+    --sidebar-width: 240px;
+    --sidebar-collapsed-width: 64px;
+    --header-height: 64px;
+    --transition-speed: 0.2s;
+}
+
+/* Color Schemes */
+[data-color="slate"] { --bs-primary: #475569; --bs-primary-rgb: 71, 85, 105; }
+[data-color="red"] { --bs-primary: #dc2626; --bs-primary-rgb: 220, 38, 38; }
+[data-color="orange"] { --bs-primary: #ea580c; --bs-primary-rgb: 234, 88, 12; }
+[data-color="amber"] { --bs-primary: #d97706; --bs-primary-rgb: 217, 119, 6; }
+[data-color="lime"] { --bs-primary: #65a30d; --bs-primary-rgb: 101, 163, 13; }
+[data-color="green"] { --bs-primary: #16a34a; --bs-primary-rgb: 22, 163, 74; }
+[data-color="teal"] { --bs-primary: #0d9488; --bs-primary-rgb: 13, 148, 136; }
+[data-color="sky"] { --bs-primary: #0ea5e9; --bs-primary-rgb: 14, 165, 233; }
+[data-color="indigo"] { --bs-primary: #4f46e5; --bs-primary-rgb: 79, 70, 229; }
+[data-color="fuchsia"] { --bs-primary: #c026d3; --bs-primary-rgb: 192, 38, 211; }
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+}
+
+/* ========================================
+   Header
+   ======================================== */
+
+#main-header {
+    background: var(--bs-body-bg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#main-header h1 {
+    font-size: 1.125rem;
+    letter-spacing: -0.025em;
+}
+
+/* Breadcrumb styling */
+.breadcrumb {
+    font-size: 0.8125rem;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: none;
+}
+
+.breadcrumb-item a {
+    color: var(--bs-secondary-color);
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--bs-primary);
+}
+
+.breadcrumb-item.active {
+    color: var(--bs-body-color);
+    font-weight: 500;
+}
+
+/* ========================================
+   Sidebar
+   ======================================== */
+
+#sidebarOffcanvas {
+    width: var(--sidebar-width);
+    transition: width var(--transition-speed) ease;
+}
+
+@media (min-width: 992px) {
+    #sidebarOffcanvas {
+        position: sticky !important;
+        top: var(--header-height);
+        height: calc(100vh - var(--header-height));
+        transform: none !important;
+        visibility: visible !important;
+    }
+
+    body.sidebar-collapsed #sidebarOffcanvas {
+        width: var(--sidebar-collapsed-width);
+    }
+
+    body.sidebar-collapsed .menu-header,
+    body.sidebar-collapsed .menu-link span,
+    body.sidebar-collapsed #sidebar-search,
+    body.sidebar-collapsed .offcanvas-body > .border-top {
+        display: none !important;
+    }
+
+    body.sidebar-collapsed .menu-link {
+        justify-content: center;
+        padding: 0.75rem;
+    }
+
+    body.sidebar-collapsed .menu-link i {
+        margin: 0;
+    }
+}
+
+/* Sidebar scroll indipendente */
+#sidebarOffcanvas .offcanvas-body {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#sidebar-nav {
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0; /* Importante per flexbox scroll */
+}
+
+/* Menu Header */
+.menu-header {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--bs-secondary-color);
+    padding: 0.5rem 0.75rem 0.25rem;
+    margin-top: 0.25rem;
+}
+
+.menu-header:first-child {
+    margin-top: 0;
+    padding-top: 0.25rem;
+}
+
+/* Menu Links */
+.menu-link {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.35rem 0.75rem;
+    margin: 0.0625rem 0;
+    border-radius: 0.5rem;
+    color: var(--bs-body-color);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all var(--transition-speed) ease;
+}
+
+.menu-link:hover {
+    background: rgba(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-primary);
+}
+
+.menu-link.active {
+    background: var(--bs-primary);
+    color: #fff;
+}
+
+.menu-link.active i {
+    color: #fff;
+}
+
+.menu-link i {
+    color: var(--bs-secondary-color);
+    flex-shrink: 0;
+}
+
+.menu-link:hover i {
+    color: var(--bs-primary);
+}
+
+/* Sidebar Search */
+#sidebar-search {
+    font-size: 0.8125rem;
+}
+
+#sidebar-search:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+/* ========================================
+   Main Content
+   ======================================== */
+
+#main-content {
+    background: var(--bs-body-bg);
+    min-height: calc(100vh - var(--header-height));
+}
+
+[data-bs-theme="dark"] #main-content {
+    background: var(--bs-dark-bg-subtle);
+}
+
+/* ========================================
+   User Menu & Color Selector
+   ======================================== */
+
+.color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform var(--transition-speed) ease;
+}
+
+.color-swatch:hover {
+    transform: scale(1.15);
+}
+
+.color-swatch.active {
+    border-color: var(--bs-body-color);
+    box-shadow: 0 0 0 2px var(--bs-body-bg);
+}
+
+#theme-selector .btn.active {
+    background: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: #fff;
+}
+
+/* ========================================
+   Cards & Tables
+   ======================================== */
+
+.card {
+    border: 1px solid var(--bs-border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    color: var(--bs-secondary-color);
+    border-bottom-width: 1px;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+
+.btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.btn-primary:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.85);
+    border-color: rgba(var(--bs-primary-rgb), 0.85);
+}
+
+.btn-outline-primary {
+    color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+/* ========================================
+   Forms
+   ======================================== */
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    font-size: 0.875rem;
+    margin-bottom: 0.375rem;
+}
+
+/* ========================================
+   Pagination
+   ======================================== */
+
+.pagination .page-link {
+    color: var(--bs-body-color);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+/* ========================================
+   Alerts & Flash Messages
+   ======================================== */
+
+.alert {
+    border-radius: 0.5rem;
+    border: none;
+}
+
+/* ========================================
+   Action Buttons (Table)
+   ======================================== */
+
+.actions {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.actions .btn {
+    padding: 0.25rem 0.5rem;
+}
+
+/* ========================================
+   Dark Mode Adjustments
+   ======================================== */
+
+[data-bs-theme="dark"] {
+    --bs-body-bg: var(--bs-dark-bg-subtle);
+    --bs-body-color: #e2e8f0;
+    --bs-border-color: #495057;
+}
+
+[data-bs-theme="dark"] .card {
+    background: #212529;
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .table {
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.02);
+}
+
+[data-bs-theme="dark"] .offcanvas,
+[data-bs-theme="dark"] #sidebarOffcanvas {
+    background: #212529;
+}
+
+[data-bs-theme="dark"] .dropdown-menu {
+    background: #212529;
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* ========================================
+   Responsive Adjustments
+   ======================================== */
+
+@media (max-width: 991.98px) {
+    #sidebarOffcanvas {
+        --sidebar-width: 280px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #main-content > div {
+        padding: 1rem !important;
+    }
+}
+
+/* ========================================
+   Utilities
+   ======================================== */
+
+.text-primary {
+    color: var(--bs-primary) !important;
+}
+
+.bg-primary {
+    background-color: var(--bs-primary) !important;
+}
+
+/* Link colors */
+a {
+    color: var(--bs-primary);
+}
+
+a:hover {
+    color: rgba(var(--bs-primary-rgb), 0.8);
+}
+
+/* Badge */
+.badge.bg-primary {
+    background-color: var(--bs-primary) !important;
+}
+
+/* Progress */
+.progress-bar {
+    background-color: var(--bs-primary);
+}
+
+/* Highlight for search */
+.menu-link.highlight {
+    background: rgba(var(--bs-primary-rgb), 0.15);
+}
+
+/* Hidden items when searching */
+.menu-link.hidden,
+.menu-header.hidden {
+    display: none !important;
+}
+
+/* ========================================
+   Content Tables (CakePHP Bake Generated)
+   ======================================== */
+
+.content {
+    background: var(--bs-body-bg);
+}
+
+.content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--bs-body-color);
+}
+
+.content table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: var(--bs-body-bg);
+    border-collapse: collapse;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.content table thead th {
+    background-color: rgba(var(--bs-secondary-rgb), 0.1);
+    border-bottom: 2px solid var(--bs-border-color);
+    color: var(--bs-secondary-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.75rem;
+    padding: 0.75rem;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.content table thead th a {
+    color: var(--bs-secondary-color);
+    text-decoration: none;
+}
+
+.content table thead th a:hover {
+    color: var(--bs-primary);
+}
+
+.content table tbody td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--bs-border-color);
+    font-size: 0.875rem;
+}
+
+.content table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.content table tbody tr:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.04);
+}
+
+/* Actions column */
+.content table .actions {
+    white-space: nowrap;
+}
+
+.content table .actions a {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    margin: 0.125rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: all 0.15s ease;
+}
+
+.content table .actions a:first-child {
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-primary);
+}
+
+.content table .actions a:first-child:hover {
+    background-color: var(--bs-primary);
+    color: #fff;
+}
+
+.content table .actions a:nth-child(2) {
+    background-color: rgba(var(--bs-warning-rgb), 0.1);
+    color: var(--bs-warning);
+}
+
+.content table .actions a:nth-child(2):hover {
+    background-color: var(--bs-warning);
+    color: #fff;
+}
+
+.content table .actions a:last-child {
+    background-color: rgba(var(--bs-danger-rgb), 0.1);
+    color: var(--bs-danger);
+}
+
+.content table .actions a:last-child:hover {
+    background-color: var(--bs-danger);
+    color: #fff;
+}
+
+/* Content buttons */
+.content .button,
+.content a.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #fff;
+    background-color: var(--bs-primary);
+    border: 1px solid var(--bs-primary);
+    border-radius: 0.375rem;
+    transition: all 0.15s ease;
+}
+
+.content .button:hover,
+.content a.button:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.85);
+    border-color: rgba(var(--bs-primary-rgb), 0.85);
+    color: #fff;
+}
+
+.content .float-right {
+    float: right;
+}
+
+/* Paginator */
+.content .paginator {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bs-border-color);
+}
+
+.content .paginator .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.75rem 0;
+}
+
+.content .paginator .pagination li {
+    display: inline-block;
+}
+
+.content .paginator .pagination li a,
+.content .paginator .pagination li span {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    text-decoration: none;
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.25rem;
+    transition: all 0.15s ease;
+}
+
+.content .paginator .pagination li a:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    border-color: var(--bs-primary);
+    color: var(--bs-primary);
+}
+
+.content .paginator .pagination li.active a,
+.content .paginator .pagination li.active span {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: #fff;
+}
+
+.content .paginator .pagination li.disabled a,
+.content .paginator .pagination li.disabled span {
+    color: var(--bs-secondary-color);
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.content .paginator p {
+    font-size: 0.8125rem;
+    color: var(--bs-secondary-color);
+    margin: 0;
+}
+
+/* Dark mode adjustments for content tables */
+[data-bs-theme="dark"] .content table {
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .content table thead th {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-bottom-color: #495057;
+}
+
+[data-bs-theme="dark"] .content table tbody td {
+    border-bottom-color: #495057;
+}
+
+[data-bs-theme="dark"] .content table tbody tr:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.08);
+}
+
+[data-bs-theme="dark"] .content .paginator {
+    border-top-color: #495057;
+}
+
+[data-bs-theme="dark"] .content .paginator .pagination li a,
+[data-bs-theme="dark"] .content .paginator .pagination li span {
+    background-color: #212529;
+    border-color: #495057;
+}
+
+/* Responsive table wrapper */
+.content .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+}
+
+/* ========================================
+   Column Toggle System
+   ======================================== */
+
+/* Toolbar sopra la tabella */
+.content .table-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background-color: rgba(var(--bs-secondary-rgb), 0.05);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+}
+
+.content .table-toolbar .toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.content .table-toolbar .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Bottoni toolbar */
+.content .table-toolbar .btn-toolbar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    transition: all 0.15s ease;
+}
+
+.content .table-toolbar .btn-toolbar svg {
+    width: 14px;
+    height: 14px;
+}
+
+.content .table-toolbar .btn-outline-secondary {
+    color: var(--bs-secondary-color);
+    background-color: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+}
+
+.content .table-toolbar .btn-outline-secondary:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    border-color: var(--bs-primary);
+    color: var(--bs-primary);
+}
+
+.content .table-toolbar .btn-outline-secondary.active {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: #fff;
+}
+
+/* Meta info (conteggio record) */
+.content .table-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.8125rem;
+    color: var(--bs-secondary-color);
+}
+
+.content .table-meta .meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.content .table-meta .meta-item svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+}
+
+/* Colonne nascoste di default (oltre la 5a) */
+@media (min-width: 992px) {
+    .content table th.col-hidden,
+    .content table td.col-hidden {
+        display: none;
+    }
+
+    /* Mostra colonne quando toggle attivo */
+    .content table.show-all-columns th.col-hidden,
+    .content table.show-all-columns td.col-hidden {
+        display: table-cell;
+    }
+}
+
+/* Su mobile nascondi tutte le colonne extra */
+@media (max-width: 991.98px) {
+    .content table th.col-mobile-hidden,
+    .content table td.col-mobile-hidden {
+        display: none;
+    }
+}
+
+/* Indicatore colonne nascoste */
+.content .hidden-columns-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+    background-color: rgba(var(--bs-secondary-rgb), 0.1);
+    border-radius: 999px;
+}
+
+/* Dark mode */
+[data-bs-theme="dark"] .content .table-toolbar {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .content .table-toolbar .btn-outline-secondary {
+    background-color: #212529;
+    border-color: #495057;
+    color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .content .table-toolbar .btn-outline-secondary:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.15);
+}
+
+/* ========================================
+   Form Styles (Add/Edit Pages)
+   ======================================== */
+
+/* Form content wrapper */
+.content.form-content {
+    max-width: 1400px;
+}
+
+/* Page header */
+.content .page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.content .page-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.content .page-header .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Form card */
+.content .form-card {
+    background: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.content .form-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 1rem 2rem;
+    background: rgba(var(--bs-secondary-rgb), 0.05);
+    border-bottom: 1px solid var(--bs-border-color);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.content .form-card-header svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+}
+
+.content .form-card-body {
+    padding: 1.5rem 2rem;
+}
+
+/* Form rows */
+.content .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.content .form-row:last-child {
+    margin-bottom: 0;
+}
+
+.content .form-col {
+    flex: 1;
+    min-width: 250px;
+}
+
+.content .form-col-full {
+    flex: 0 0 100%;
+    width: 100%;
+}
+
+.content .form-col-half {
+    flex: 1 1 calc(50% - 0.625rem);
+    min-width: 280px;
+}
+
+.content .form-col-third {
+    flex: 1 1 calc(33.333% - 0.834rem);
+    min-width: 200px;
+}
+
+.content .form-col-quarter {
+    flex: 1 1 calc(25% - 0.9375rem);
+    min-width: 150px;
+}
+
+/* Form controls */
+.content .form-group {
+    margin-bottom: 0;
+}
+
+.content .form-group label {
+    display: block;
+    margin-bottom: 0.375rem;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    color: var(--bs-secondary-color);
+}
+
+.content .form-group label.required::after {
+    content: ' *';
+    color: var(--bs-danger);
+}
+
+.content .input,
+.content input[type="text"],
+.content input[type="email"],
+.content input[type="number"],
+.content input[type="password"],
+.content input[type="tel"],
+.content input[type="url"],
+.content input[type="date"],
+.content input[type="datetime-local"],
+.content select,
+.content textarea {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.375rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.content input:focus,
+.content select:focus,
+.content textarea:focus {
+    border-color: var(--bs-primary);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.15);
+}
+
+.content textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.content select {
+    cursor: pointer;
+}
+
+/* Checkbox styling */
+.content input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.content .checkbox label {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+/* Error messages */
+.content .error-message {
+    color: var(--bs-danger);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.content .input.error,
+.content input.error,
+.content select.error,
+.content textarea.error {
+    border-color: var(--bs-danger);
+}
+
+/* Form actions */
+.content .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: rgba(var(--bs-secondary-rgb), 0.03);
+    border-top: 1px solid var(--bs-border-color);
+    margin: 0 -1.25rem -1.25rem;
+}
+
+.content .form-actions .btn-group-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.content .form-actions .btn-group-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Button styles for forms */
+.content .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.content .btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.content .btn-primary {
+    color: #fff;
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.content .btn-primary:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.85);
+    border-color: rgba(var(--bs-primary-rgb), 0.85);
+}
+
+.content .btn-secondary {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: var(--bs-border-color);
+}
+
+.content .btn-secondary:hover {
+    background-color: rgba(var(--bs-secondary-rgb), 0.1);
+}
+
+.content .btn-success {
+    color: #fff;
+    background-color: #16a34a;
+    border-color: #16a34a;
+}
+
+.content .btn-success:hover {
+    background-color: #15803d;
+    border-color: #15803d;
+}
+
+.content .btn-danger {
+    color: #fff;
+    background-color: #dc2626;
+    border-color: #dc2626;
+}
+
+.content .btn-danger:hover {
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+}
+
+.content .btn-outline-secondary {
+    color: var(--bs-secondary-color);
+    background-color: transparent;
+    border-color: var(--bs-border-color);
+}
+
+.content .btn-outline-secondary:hover {
+    background-color: rgba(var(--bs-secondary-rgb), 0.1);
+    color: var(--bs-body-color);
+}
+
+/* Section divider */
+.content .section-divider {
+    border: 0;
+    border-top: 1px dashed var(--bs-border-color);
+    margin: 1.5rem 0;
+}
+
+/* Help text */
+.content .help-text {
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+    margin-top: 0.25rem;
+}
+
+/* Dark mode form adjustments */
+[data-bs-theme="dark"] .content .form-card {
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .content .form-card-header {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-bottom-color: #495057;
+}
+
+[data-bs-theme="dark"] .content input,
+[data-bs-theme="dark"] .content select,
+[data-bs-theme="dark"] .content textarea {
+    background-color: #212529;
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .content .form-actions {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-top-color: #495057;
+}
+
+/* Responsive form adjustments */
+@media (max-width: 768px) {
+    .content .form-col,
+    .content .form-col-half,
+    .content .form-col-third,
+    .content .form-col-quarter {
+        flex: 100%;
+        min-width: 100%;
+    }
+
+    .content .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .content .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .content .form-actions .btn-group-left,
+    .content .form-actions .btn-group-right {
+        justify-content: center;
+    }
+}
+
+/* ========================================
+   Righe Fattura - Layout Tabellare Moderno
+   ======================================== */
+
+/* Card Container */
+.righe-fattura-card {
+    overflow: visible;
+}
+
+.righe-fattura-card .form-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+/* Badge conteggio righe */
+.righe-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--bs-primary);
+    border-radius: 999px;
+}
+
+/* Bottone aggiungi riga header */
+.btn-add-riga {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Table Wrapper */
+.righe-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Tabella Righe */
+.righe-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+}
+
+.righe-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.righe-table thead th {
+    padding: 0.625rem 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--bs-secondary-color);
+    background: rgba(var(--bs-secondary-rgb), 0.08);
+    border-bottom: 2px solid var(--bs-border-color);
+    white-space: nowrap;
+    text-align: left;
+}
+
+.righe-table thead th.col-num { width: 40px; text-align: center; }
+.righe-table thead th.col-prodotto { min-width: 150px; }
+.righe-table thead th.col-descrizione { min-width: 200px; }
+.righe-table thead th.col-qta { width: 100px; text-align: right; }
+.righe-table thead th.col-um { width: 90px; text-align: center; }
+.righe-table thead th.col-prezzo { width: 100px; text-align: right; }
+.righe-table thead th.col-iva { width: 100px; text-align: right; }
+.righe-table thead th.col-natura { width: 80px; text-align: center; }
+.righe-table thead th.col-totale { width: 100px; text-align: right; }
+.righe-table thead th.col-actions { width: 40px; }
+
+/* Righe */
+.righe-table tbody tr.riga-row {
+    transition: background-color 0.15s ease;
+}
+
+.righe-table tbody tr.riga-row:hover {
+    background: rgba(var(--bs-primary-rgb), 0.04);
+}
+
+.righe-table tbody tr.riga-row:nth-child(even) {
+    background: rgba(var(--bs-secondary-rgb), 0.02);
+}
+
+.righe-table tbody tr.riga-row:nth-child(even):hover {
+    background: rgba(var(--bs-primary-rgb), 0.06);
+}
+
+.righe-table tbody td {
+    padding: 0.5rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+/* Numero riga */
+.righe-table .col-num {
+    text-align: center;
+}
+
+.riga-numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--bs-secondary-color);
+    background: rgba(var(--bs-secondary-rgb), 0.1);
+    border-radius: 50%;
+}
+
+/* Form controls nella tabella */
+.righe-table .form-control,
+.righe-table .form-select {
+    font-size: 0.875rem;
+    padding: 0.5rem 0.625rem;
+    border-color: transparent;
+    background-color: transparent;
+    color: var(--bs-body-color);
+    font-weight: 500;
+}
+
+.righe-table .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    opacity: 0.7;
+}
+
+.righe-table .form-control:hover,
+.righe-table .form-select:hover {
+    border-color: var(--bs-border-color);
+    background-color: var(--bs-body-bg);
+}
+
+.righe-table .form-control:focus,
+.righe-table .form-select:focus {
+    border-color: var(--bs-primary);
+    background-color: var(--bs-body-bg);
+    box-shadow: 0 0 0 2px rgba(var(--bs-primary-rgb), 0.15);
+}
+
+/* Input numerici allineati a destra */
+.righe-table .text-end {
+    text-align: right;
+}
+
+/* Select prodotto */
+.righe-table .prodotto-select {
+    min-width: 130px;
+}
+
+/* Input descrizione */
+.righe-table .descrizione-input {
+    min-width: 180px;
+}
+
+/* Colonna totale */
+.righe-table .col-totale {
+    text-align: right;
+}
+
+.totale-riga-display {
+    font-weight: 600;
+    color: var(--bs-success);
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Bottone rimuovi riga */
+.btn-remove-riga {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-radius: 0.25rem;
+    background: transparent;
+    color: var(--bs-secondary-color);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-remove-riga:hover {
+    background: rgba(var(--bs-danger-rgb), 0.1);
+    color: var(--bs-danger);
+}
+
+.btn-remove-riga:active {
+    transform: scale(0.95);
+}
+
+/* Animazione nuova riga */
+.riga-row.riga-new {
+    animation: rigaFadeIn 0.3s ease;
+}
+
+@keyframes rigaFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animazione rimozione riga */
+.riga-row.riga-removing {
+    animation: rigaFadeOut 0.25s ease forwards;
+}
+
+@keyframes rigaFadeOut {
+    to {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+/* Empty State */
+.righe-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--bs-secondary-color);
+}
+
+.righe-empty-state svg {
+    margin-bottom: 1rem;
+    opacity: 0.4;
+}
+
+.righe-empty-state p {
+    margin: 0 0 1rem;
+    font-size: 0.9375rem;
+}
+
+/* Totali Wrapper */
+.righe-totali-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.25rem;
+    background: linear-gradient(to right, transparent, rgba(var(--bs-secondary-rgb), 0.03));
+    border-top: 1px solid var(--bs-border-color);
+}
+
+.righe-totali-box {
+    position: relative;
+    min-width: 280px;
+    padding: 2.5rem 1.25rem 1rem 1.25rem;
+    background: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.totali-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    gap: 1rem;
+}
+
+.totali-label {
+    font-size: 0.8125rem;
+    color: var(--bs-secondary-color);
+    font-weight: 500;
+}
+
+.totali-value {
+    font-size: 1rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--bs-body-color);
+}
+
+.totali-currency {
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+    min-width: 30px;
+}
+
+.totali-divider {
+    height: 1px;
+    background: var(--bs-border-color);
+    margin: 0.5rem 0;
+}
+
+.totali-row.totali-iva .totali-value {
+    color: var(--bs-warning);
+}
+
+.totali-row.totali-finale {
+    padding-top: 0.75rem;
+}
+
+.totali-row.totali-finale .totali-label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--bs-body-color);
+}
+
+.totali-row.totali-finale .totali-value {
+    font-size: 1.25rem;
+    color: var(--bs-success);
+}
+
+.totali-row.totali-ritenuta {
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--bs-border-color);
+    margin-top: 0.5rem;
+}
+
+.totali-row.totali-ritenuta .totali-label {
+    color: var(--bs-danger);
+    font-size: 0.8125rem;
+}
+
+.totali-row.totali-ritenuta .totali-value {
+    color: var(--bs-danger);
+}
+
+.totali-row.totali-netto {
+    padding-top: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+.totali-row.totali-netto .totali-label {
+    font-size: 0.9375rem;
+    color: var(--bs-primary);
+}
+
+.totali-row.totali-netto .totali-value {
+    font-size: 1.125rem;
+    color: var(--bs-primary);
+}
+
+/* Pulsante Ricalcola */
+.btn-ricalcola {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.65rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: all 0.2s ease;
+    z-index: 10;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.btn-ricalcola:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Animazione spin per loading */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+/* ========================================
+   Righe Fattura - Dark Mode
+   ======================================== */
+
+[data-bs-theme="dark"] .righe-table thead th {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom-color: #495057;
+}
+
+[data-bs-theme="dark"] .righe-table tbody td {
+    border-bottom-color: #495057;
+}
+
+[data-bs-theme="dark"] .righe-table tbody tr.riga-row:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+[data-bs-theme="dark"] .righe-table tbody tr.riga-row:hover,
+[data-bs-theme="dark"] .righe-table tbody tr.riga-row:nth-child(even):hover {
+    background: rgba(var(--bs-primary-rgb), 0.1);
+}
+
+[data-bs-theme="dark"] .righe-table .form-control:hover,
+[data-bs-theme="dark"] .righe-table .form-select:hover {
+    border-color: #6c757d;
+    background-color: #212529;
+}
+
+[data-bs-theme="dark"] .righe-table .form-control:focus,
+[data-bs-theme="dark"] .righe-table .form-select:focus {
+    background-color: #212529;
+}
+
+[data-bs-theme="dark"] .riga-numero {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .righe-totali-wrapper {
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.02));
+    border-top-color: #495057;
+}
+
+[data-bs-theme="dark"] .righe-totali-box {
+    background: #212529;
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .totali-divider {
+    background: #495057;
+}
+
+[data-bs-theme="dark"] .righe-empty-state {
+    color: #adb5bd;
+}
+
+/* ========================================
+   Righe Fattura - Mobile Responsive
+   ======================================== */
+
+@media (max-width: 991.98px) {
+    /* Nascondi tabella su mobile */
+    .righe-table {
+        display: none;
+    }
+
+    /* Mostra card mobile */
+    .righe-mobile-container {
+        display: block;
+    }
+
+    .righe-totali-wrapper {
+        justify-content: stretch;
+    }
+
+    .righe-totali-box {
+        width: 100%;
+        min-width: auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .righe-mobile-container {
+        display: none;
+    }
+}
+
+/* Mobile Card Layout */
+.righe-mobile-container {
+    padding: 1rem;
+}
+
+.riga-mobile-card {
+    background: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: box-shadow 0.15s ease;
+}
+
+.riga-mobile-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.riga-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: rgba(var(--bs-secondary-rgb), 0.05);
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.riga-mobile-num {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--bs-primary);
+}
+
+.riga-mobile-body {
+    padding: 1rem;
+}
+
+.riga-mobile-field {
+    margin-bottom: 0.75rem;
+}
+
+.riga-mobile-field.full {
+    width: 100%;
+}
+
+.riga-mobile-field label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--bs-secondary-color);
+    margin-bottom: 0.25rem;
+}
+
+.riga-mobile-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.riga-mobile-row .riga-mobile-field {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.riga-mobile-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(var(--bs-success-rgb), 0.05);
+    border-top: 1px solid var(--bs-border-color);
+}
+
+.riga-mobile-totale-label {
+    font-size: 0.8125rem;
+    color: var(--bs-secondary-color);
+}
+
+.riga-mobile-footer .totale-riga-display {
+    font-size: 1rem;
+}
+
+/* Dark mode mobile */
+[data-bs-theme="dark"] .riga-mobile-card {
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .riga-mobile-header {
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom-color: #495057;
+}
+
+[data-bs-theme="dark"] .riga-mobile-footer {
+    background: rgba(var(--bs-success-rgb), 0.08);
+    border-top-color: #495057;
+}
+
+/* ========================================
+   View Fattura - Stile Fattura Elettronica
+   ======================================== */
+
+.fattura-view-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Toolbar */
+.fattura-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+}
+
+.fattura-toolbar .toolbar-left,
+.fattura-toolbar .toolbar-right {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fattura-toolbar .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.fattura-toolbar .btn i,
+.fattura-toolbar .btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Stato SDI Banner */
+.fattura-stato-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+}
+
+.fattura-stato-banner i,
+.fattura-stato-banner svg {
+    width: 20px;
+    height: 20px;
+}
+
+.fattura-stato-banner .sdi-id {
+    margin-left: auto;
+    font-family: monospace;
+    font-size: 0.875rem;
+}
+
+.fattura-stato-banner.badge-success {
+    background: rgba(var(--bs-success-rgb), 0.15);
+    color: var(--bs-success);
+    border: 1px solid rgba(var(--bs-success-rgb), 0.3);
+}
+
+.fattura-stato-banner.badge-danger {
+    background: rgba(var(--bs-danger-rgb), 0.15);
+    color: var(--bs-danger);
+    border: 1px solid rgba(var(--bs-danger-rgb), 0.3);
+}
+
+.fattura-stato-banner.badge-warning {
+    background: rgba(var(--bs-warning-rgb), 0.15);
+    color: var(--bs-warning);
+    border: 1px solid rgba(var(--bs-warning-rgb), 0.3);
+}
+
+.fattura-stato-banner.badge-secondary {
+    background: rgba(var(--bs-secondary-rgb), 0.1);
+    color: var(--bs-secondary-color);
+    border: 1px solid var(--bs-border-color);
+}
+
+/* Documento Fattura */
+.fattura-documento {
+    background: var(--bs-body-bg);
+    border: 2px solid var(--bs-border-color);
+    border-radius: 0;
+    margin-bottom: 1.5rem;
+}
+
+/* Header Cedente/Cessionario */
+.fattura-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 2px solid var(--bs-border-color);
+}
+
+.fattura-soggetto {
+    padding: 1rem 1.25rem;
+}
+
+.fattura-soggetto.cedente {
+    border-right: 2px solid var(--bs-border-color);
+}
+
+.soggetto-title {
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.soggetto-content {
+    font-size: 0.8125rem;
+    line-height: 1.6;
+}
+
+.soggetto-row {
+    margin-bottom: 0.125rem;
+}
+
+.soggetto-row .label {
+    color: var(--bs-secondary-color);
+}
+
+.soggetto-row .value {
+    font-weight: 500;
+}
+
+/* Dati Documento */
+.fattura-dati-documento {
+    border-bottom: 2px solid var(--bs-border-color);
+}
+
+.dati-documento-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dati-documento-table th {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: left;
+    background: rgba(var(--bs-secondary-rgb), 0.08);
+    border-bottom: 1px solid var(--bs-border-color);
+    border-right: 1px solid var(--bs-border-color);
+}
+
+.dati-documento-table th:last-child {
+    border-right: none;
+}
+
+.dati-documento-table td {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.875rem;
+    border-right: 1px solid var(--bs-border-color);
+}
+
+.dati-documento-table td:last-child {
+    border-right: none;
+}
+
+/* Righe Fattura */
+.fattura-righe {
+    border-bottom: 2px solid var(--bs-border-color);
+    overflow-x: auto;
+}
+
+.fattura-righe .righe-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+}
+
+.fattura-righe .righe-table th {
+    padding: 0.5rem 0.625rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    text-align: left;
+    background: rgba(var(--bs-secondary-rgb), 0.08);
+    border-bottom: 1px solid var(--bs-border-color);
+    border-right: 1px solid var(--bs-border-color);
+    white-space: nowrap;
+}
+
+.fattura-righe .righe-table th:last-child {
+    border-right: none;
+}
+
+.fattura-righe .righe-table td {
+    padding: 0.625rem;
+    vertical-align: top;
+    border-bottom: 1px solid var(--bs-border-color);
+    border-right: 1px solid var(--bs-border-color);
+}
+
+.fattura-righe .righe-table td:last-child {
+    border-right: none;
+}
+
+.fattura-righe .righe-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.fattura-righe .col-codice { width: 100px; }
+.fattura-righe .col-descrizione { min-width: 200px; }
+.fattura-righe .col-qta { width: 80px; }
+.fattura-righe .col-prezzo { width: 100px; }
+.fattura-righe .col-um { width: 50px; }
+.fattura-righe .col-sconto { width: 80px; }
+.fattura-righe .col-iva { width: 60px; }
+.fattura-righe .col-totale { width: 100px; }
+
+/* Riepilogo IVA e Totali */
+.fattura-riepilogo {
+    border-bottom: 2px solid var(--bs-border-color);
+}
+
+.riepilogo-title {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    background: rgba(var(--bs-secondary-rgb), 0.12);
+    border-bottom: 1px solid var(--bs-border-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.riepilogo-table,
+.totale-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+}
+
+.riepilogo-table th,
+.totale-table th {
+    padding: 0.5rem 0.625rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-align: left;
+    background: rgba(var(--bs-secondary-rgb), 0.05);
+    border-bottom: 1px solid var(--bs-border-color);
+    border-right: 1px solid var(--bs-border-color);
+}
+
+.riepilogo-table th:last-child,
+.totale-table th:last-child {
+    border-right: none;
+}
+
+.riepilogo-table td,
+.totale-table td {
+    padding: 0.625rem;
+    border-right: 1px solid var(--bs-border-color);
+}
+
+.riepilogo-table td:last-child,
+.totale-table td:last-child {
+    border-right: none;
+}
+
+.totale-table {
+    border-top: 1px solid var(--bs-border-color);
+}
+
+.totale-table .totale-label {
+    font-weight: 700;
+}
+
+.totale-table .totale-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--bs-success);
+}
+
+/* Ritenuta */
+.fattura-ritenuta {
+    border-bottom: 2px solid var(--bs-border-color);
+}
+
+.ritenuta-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+}
+
+.ritenuta-table th {
+    padding: 0.5rem 0.625rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-align: left;
+    background: rgba(var(--bs-secondary-rgb), 0.08);
+    border-bottom: 1px solid var(--bs-border-color);
+    border-right: 1px solid var(--bs-border-color);
+}
+
+.ritenuta-table th:last-child {
+    border-right: none;
+}
+
+.ritenuta-table td {
+    padding: 0.625rem;
+    border-right: 1px solid var(--bs-border-color);
+}
+
+.ritenuta-table td:last-child {
+    border-right: none;
+}
+
+/* Pagamento */
+.fattura-pagamento {
+    border-bottom: 2px solid var(--bs-border-color);
+}
+
+.pagamento-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+}
+
+.pagamento-table th {
+    padding: 0.5rem 0.625rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-align: left;
+    background: rgba(var(--bs-secondary-rgb), 0.08);
+    border-bottom: 1px solid var(--bs-border-color);
+    border-right: 1px solid var(--bs-border-color);
+}
+
+.pagamento-table th:last-child {
+    border-right: none;
+}
+
+.pagamento-table td {
+    padding: 0.625rem;
+    vertical-align: top;
+    border-right: 1px solid var(--bs-border-color);
+}
+
+.pagamento-table td:last-child {
+    border-right: none;
+}
+
+/* Causale e Note */
+.fattura-causale,
+.fattura-note {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.causale-title,
+.note-title {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: var(--bs-secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.causale-content,
+.note-content {
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.fattura-note {
+    background: rgba(var(--bs-warning-rgb), 0.05);
+}
+
+/* Storico SDI */
+.fattura-storico-sdi {
+    background: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.storico-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    background: rgba(var(--bs-secondary-rgb), 0.05);
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.storico-title i,
+.storico-title svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+}
+
+.storico-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+}
+
+.storico-table th {
+    padding: 0.625rem 1rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: left;
+    background: rgba(var(--bs-secondary-rgb), 0.03);
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.storico-table td {
+    padding: 0.625rem 1rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.storico-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Allegati */
+.fattura-allegati {
+    background: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.allegati-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    background: rgba(var(--bs-secondary-rgb), 0.05);
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.allegati-title i,
+.allegati-title svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+}
+
+.allegati-list {
+    padding: 1rem;
+}
+
+.allegato-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: rgba(var(--bs-secondary-rgb), 0.03);
+    border-radius: 0.25rem;
+}
+
+.allegato-item:last-child {
+    margin-bottom: 0;
+}
+
+.allegato-item i,
+.allegato-item svg {
+    width: 16px;
+    height: 16px;
+    opacity: 0.6;
+}
+
+/* Metadati */
+.fattura-meta {
+    text-align: right;
+    padding: 0.5rem 0;
+}
+
+/* Dark Mode */
+[data-bs-theme="dark"] .fattura-documento {
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .fattura-header,
+[data-bs-theme="dark"] .fattura-dati-documento,
+[data-bs-theme="dark"] .fattura-righe,
+[data-bs-theme="dark"] .fattura-riepilogo,
+[data-bs-theme="dark"] .fattura-ritenuta,
+[data-bs-theme="dark"] .fattura-pagamento,
+[data-bs-theme="dark"] .fattura-causale,
+[data-bs-theme="dark"] .fattura-note {
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .fattura-soggetto.cedente {
+    border-right-color: #495057;
+}
+
+[data-bs-theme="dark"] .soggetto-title {
+    border-bottom-color: #495057;
+}
+
+[data-bs-theme="dark"] .dati-documento-table th,
+[data-bs-theme="dark"] .dati-documento-table td,
+[data-bs-theme="dark"] .fattura-righe .righe-table th,
+[data-bs-theme="dark"] .fattura-righe .righe-table td,
+[data-bs-theme="dark"] .riepilogo-table th,
+[data-bs-theme="dark"] .riepilogo-table td,
+[data-bs-theme="dark"] .totale-table th,
+[data-bs-theme="dark"] .totale-table td,
+[data-bs-theme="dark"] .ritenuta-table th,
+[data-bs-theme="dark"] .ritenuta-table td,
+[data-bs-theme="dark"] .pagamento-table th,
+[data-bs-theme="dark"] .pagamento-table td {
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .dati-documento-table th,
+[data-bs-theme="dark"] .fattura-righe .righe-table th,
+[data-bs-theme="dark"] .riepilogo-table th,
+[data-bs-theme="dark"] .totale-table th,
+[data-bs-theme="dark"] .ritenuta-table th,
+[data-bs-theme="dark"] .pagamento-table th,
+[data-bs-theme="dark"] .riepilogo-title {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+[data-bs-theme="dark"] .fattura-toolbar,
+[data-bs-theme="dark"] .fattura-storico-sdi,
+[data-bs-theme="dark"] .fattura-allegati {
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .storico-title,
+[data-bs-theme="dark"] .allegati-title {
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom-color: #495057;
+}
+
+[data-bs-theme="dark"] .storico-table th,
+[data-bs-theme="dark"] .storico-table td {
+    border-color: #495057;
+}
+
+[data-bs-theme="dark"] .fattura-note {
+    background: rgba(var(--bs-warning-rgb), 0.08);
+}
+
+/* Print Styles - Stampa Fattura stile SDI */
+@media print {
+    /* Nascondi elementi globali pagina */
+    #main-header,
+    #sidebarOffcanvas,
+    aside,
+    header,
+    nav,
+    .breadcrumb,
+    .flash,
+    .alert,
+    .message,
+    footer {
+        display: none !important;
+    }
+
+    /* Nascondi elementi fattura non necessari */
+    .fattura-toolbar,
+    .fattura-stato-banner,
+    .fattura-storico-sdi,
+    .fattura-allegati,
+    .fattura-meta,
+    .fattura-note {
+        display: none !important;
+    }
+
+    /* Reset layout per stampa */
+    html, body {
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 11pt !important;
+    }
+
+    body.d-flex {
+        display: block !important;
+    }
+
+    #main-content,
+    main,
+    .content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .fattura-view-container {
+        max-width: 100%;
+        margin: 0;
+        padding: 10mm;
+    }
+
+    .fattura-documento {
+        border: 2px solid #000;
+        margin: 0;
+        padding: 10px;
+        box-shadow: none !important;
+        background: white !important;
+    }
+
+    /* Header cedente/cessionario */
+    .fattura-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .fattura-soggetto {
+        padding: 10px;
+    }
+
+    .soggetto-title {
+        background-color: #e5e5e5 !important;
+        color: #000 !important;
+        font-weight: bold;
+        padding: 5px 10px;
+        margin-bottom: 8px;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .soggetto-row {
+        font-size: 9pt;
+        margin-bottom: 2px;
+    }
+
+    .soggetto-row .label {
+        font-weight: bold;
+    }
+
+    /* Stili tabelle per stampa */
+    .fattura-header,
+    .fattura-dati-documento,
+    .fattura-righe,
+    .fattura-riepilogo,
+    .fattura-ritenuta,
+    .fattura-pagamento,
+    .fattura-causale {
+        border-color: #000 !important;
+    }
+
+    .dati-documento-table,
+    .righe-table,
+    .riepilogo-table,
+    .totale-table,
+    .ritenuta-table,
+    .pagamento-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .dati-documento-table th,
+    .dati-documento-table td,
+    .fattura-righe .righe-table th,
+    .fattura-righe .righe-table td,
+    .riepilogo-table th,
+    .riepilogo-table td,
+    .totale-table th,
+    .totale-table td,
+    .ritenuta-table th,
+    .ritenuta-table td,
+    .pagamento-table th,
+    .pagamento-table td {
+        border: 1px solid #000 !important;
+        padding: 4px 6px !important;
+        font-size: 9pt !important;
+    }
+
+    .dati-documento-table th,
+    .righe-table th,
+    .riepilogo-table th,
+    .totale-table th,
+    .ritenuta-table th,
+    .pagamento-table th {
+        background-color: #e5e5e5 !important;
+        font-weight: bold;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .fattura-soggetto.cedente {
+        border-right: 2px solid #000 !important;
+    }
+
+    /* Riepilogo */
+    .riepilogo-title {
+        background-color: #e5e5e5 !important;
+        color: #000 !important;
+        font-weight: bold;
+        padding: 5px 10px;
+        text-align: center;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Totale documento evidenziato */
+    .totale-value {
+        font-size: 12pt !important;
+        font-weight: bold !important;
+    }
+
+    /* Causale */
+    .fattura-causale {
+        display: block !important;
+        border-top: 1px solid #000;
+        padding: 8px;
+        margin-top: 10px;
+    }
+
+    .causale-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    /* Evita interruzioni di pagina */
+    table, tr, td, th {
+        page-break-inside: avoid;
+    }
+
+    .fattura-righe,
+    .fattura-riepilogo,
+    .fattura-pagamento {
+        page-break-inside: avoid;
+    }
+
+    /* Forza colori per stampa */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .fattura-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .fattura-toolbar .toolbar-left,
+    .fattura-toolbar .toolbar-right {
+        justify-content: center;
+    }
+
+    .fattura-header {
+        grid-template-columns: 1fr;
+    }
+
+    .fattura-soggetto.cedente {
+        border-right: none;
+        border-bottom: 2px solid var(--bs-border-color);
+    }
+
+    .fattura-righe {
+        font-size: 0.75rem;
+    }
+
+    .fattura-righe .col-codice,
+    .fattura-righe .col-sconto,
+    .fattura-righe .col-um {
+        display: none;
+    }
+}
